@@ -20,23 +20,25 @@ import (
 	"time"
 )
 
+// SNSEventRecord represents a SNS event.
 type SNSEventRecord struct {
-	EventVersion         string    `json:"EventVersion"`
-	EventSubscriptionArn string    `json:"EventSubscriptionArn"`
-	EventSource          string    `json:"EventSource"`
-	SNS                  SNSEntity `json:"Sns"`
+	EventVersion         string    `json:"eventVersion"`
+	EventSubscriptionArn string    `json:"eventSubscriptionArn"`
+	EventSource          string    `json:"eventSource"`
+	SNS                  SNSEntity `json:"sns"`
 }
 
+// SNSEntity is the data from a SNS notification.
 type SNSEntity struct {
-	Signature         string                 `json:"Signature"`
-	MessageID         string                 `json:"MessageId"`
-	Type              string                 `json:"Type"`
-	TopicArn          string                 `json:"TopicArn"`
-	MessageAttributes map[string]interface{} `json:"MessageAttributes"`
-	SignatureVersion  string                 `json:"SignatureVersion"`
-	Timestamp         time.Time              `json:"Timestamp"`
-	SigningCertURL    string                 `json:"SigningCertUrl"`
-	Message           string                 `json:"Message"`
-	UnsubscribeURL    string                 `json:"UnsubscribeUrl"`
-	Subject           string                 `json:"Subject"`
+	Signature         string                 `json:"signature"`
+	MessageID         string                 `json:"messageId"`
+	Type              string                 `json:"type"`
+	TopicArn          string                 `json:"topicArn"`
+	MessageAttributes map[string]interface{} `json:"messageAttributes"`
+	SignatureVersion  string                 `json:"signatureVersion"`
+	Timestamp         time.Time              `json:"timestamp"`
+	SigningCertURL    string                 `json:"signingCertUrl"`
+	Message           string                 `json:"message"`
+	UnsubscribeURL    string                 `json:"unsubscribeUrl"`
+	Subject           string                 `json:"subject"`
 }

@@ -71,13 +71,13 @@ var tSinkURI = &apis.URL{
 }
 
 var (
-	tAccessKeyIdSks = &corev1.SecretKeySelector{
+	tAccessKeyIDSelector = &corev1.SecretKeySelector{
 		LocalObjectReference: corev1.LocalObjectReference{
 			Name: "test-secret",
 		},
 		Key: "keyId",
 	}
-	tSecretAccessKeySks = &corev1.SecretKeySelector{
+	tSecretAccessKeySelector = &corev1.SecretKeySelector{
 		LocalObjectReference: corev1.LocalObjectReference{
 			Name: "test-secret",
 		},
@@ -295,10 +295,10 @@ func newEventSource(skipCEAtrributes ...interface{}) *v1alpha1.AWSSQSSource {
 			Region: tRegion,
 			Credentials: v1alpha1.AWSSecurityCredentials{
 				AccessKeyID: v1alpha1.ValueFromField{
-					ValueFromSecret: tAccessKeyIdSks,
+					ValueFromSecret: tAccessKeyIDSelector,
 				},
 				SecretAccessKey: v1alpha1.ValueFromField{
-					ValueFromSecret: tSecretAccessKeySks,
+					ValueFromSecret: tSecretAccessKeySelector,
 				},
 			},
 		},
@@ -442,20 +442,20 @@ func newAdapterDeployment() *appsv1.Deployment {
 									`"PrometheusPort":0,` +
 									`"ConfigMap":{"metrics.backend":"prometheus"}}`,
 							}, {
-								Name:  queueEnvVar,
+								Name:  envQueue,
 								Value: tQueue,
 							}, {
-								Name:  awsRegionEnvVar,
+								Name:  envRegion,
 								Value: tRegion,
 							}, {
-								Name: awsAccessKeyIdEnvVar,
+								Name: envAccessKeyID,
 								ValueFrom: &corev1.EnvVarSource{
-									SecretKeyRef: tAccessKeyIdSks,
+									SecretKeyRef: tAccessKeyIDSelector,
 								},
 							}, {
-								Name: awsSecretAccessKeyEnvVar,
+								Name: envSecretAccessKey,
 								ValueFrom: &corev1.EnvVarSource{
-									SecretKeyRef: tSecretAccessKeySks,
+									SecretKeyRef: tSecretAccessKeySelector,
 								},
 							},
 						},

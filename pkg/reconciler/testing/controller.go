@@ -28,6 +28,7 @@ import (
 	rt "knative.dev/pkg/reconciler/testing"
 )
 
+// TestControllerConstructor tests that a controller constructor meets our requirements.
 func TestControllerConstructor(t *testing.T, ctor injection.ControllerConstructor) {
 	t.Helper()
 
@@ -58,6 +59,8 @@ func TestControllerConstructor(t *testing.T, ctor injection.ControllerConstructo
 	EnsureNoNilField(t, ctrler)
 }
 
+// TestControllerConstructorFailures tests that a controller constructor fails
+// when various requirements are not met.
 func TestControllerConstructorFailures(t *testing.T, ctor injection.ControllerConstructor) {
 	t.Helper()
 

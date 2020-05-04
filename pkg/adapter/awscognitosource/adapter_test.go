@@ -147,7 +147,7 @@ func TestSendCognitoEvent(t *testing.T) {
 
 	a := &adapter{
 		logger:         loggingtesting.TestLogger(t),
-		identityPoolId: "fooPool",
+		identityPoolID: "fooPool",
 		ceClient:       ceClient,
 	}
 

@@ -56,7 +56,7 @@ const (
 	tImg  = "registry/image:tag"
 	tPort = 8080
 
-	tIdPool = tRegion + ":triggermeshtest"
+	tIDPool = tRegion + ":triggermeshtest"
 	tRegion = "us-test-0"
 
 	tMetricsDomain = "testing"
@@ -71,13 +71,13 @@ var tSinkURI = &apis.URL{
 }
 
 var (
-	tAccessKeyIdSks = &corev1.SecretKeySelector{
+	tAccessKeyIDSelector = &corev1.SecretKeySelector{
 		LocalObjectReference: corev1.LocalObjectReference{
 			Name: "test-secret",
 		},
 		Key: "keyId",
 	}
-	tSecretAccessKeySks = &corev1.SecretKeySelector{
+	tSecretAccessKeySelector = &corev1.SecretKeySelector{
 		LocalObjectReference: corev1.LocalObjectReference{
 			Name: "test-secret",
 		},
@@ -291,13 +291,13 @@ func newEventSource(skipCEAtrributes ...interface{}) *v1alpha1.AWSCognitoSource 
 			UID:       tUID,
 		},
 		Spec: v1alpha1.AWSCognitoSourceSpec{
-			IdentityPoolId: tIdPool,
+			IdentityPoolID: tIDPool,
 			Credentials: v1alpha1.AWSSecurityCredentials{
 				AccessKeyID: v1alpha1.ValueFromField{
-					ValueFromSecret: tAccessKeyIdSks,
+					ValueFromSecret: tAccessKeyIDSelector,
 				},
 				SecretAccessKey: v1alpha1.ValueFromField{
-					ValueFromSecret: tSecretAccessKeySks,
+					ValueFromSecret: tSecretAccessKeySelector,
 				},
 			},
 		},
@@ -441,20 +441,20 @@ func newAdapterDeployment() *appsv1.Deployment {
 									`"PrometheusPort":0,` +
 									`"ConfigMap":{"metrics.backend":"prometheus"}}`,
 							}, {
-								Name:  identityPoolIdEnvVar,
-								Value: tIdPool,
+								Name:  envIdentityPoolID,
+								Value: tIDPool,
 							}, {
-								Name:  awsRegionEnvVar,
+								Name:  envRegion,
 								Value: tRegion,
 							}, {
-								Name: awsAccessKeyIdEnvVar,
+								Name: envAccessKeyID,
 								ValueFrom: &corev1.EnvVarSource{
-									SecretKeyRef: tAccessKeyIdSks,
+									SecretKeyRef: tAccessKeyIDSelector,
 								},
 							}, {
-								Name: awsSecretAccessKeyEnvVar,
+								Name: envSecretAccessKey,
 								ValueFrom: &corev1.EnvVarSource{
-									SecretKeyRef: tSecretAccessKeySks,
+									SecretKeyRef: tSecretAccessKeySelector,
 								},
 							},
 						},

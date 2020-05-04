@@ -439,34 +439,34 @@ func newAdapterDeployment() *appsv1.Deployment {
 									`"PrometheusPort":0,` +
 									`"ConfigMap":{"metrics.backend":"prometheus"}}`,
 							}, {
-								Name:  endpointEnvVar,
+								Name:  envEndpoint,
 								Value: tFoo,
 							}, {
-								Name:  topicEnvVar,
+								Name:  envTopic,
 								Value: tFoo,
 							}, {
-								Name: rootCAEnvVar,
+								Name: envRootCA,
 								ValueFrom: &corev1.EnvVarSource{
 									SecretKeyRef: tFooRef,
 								},
 							}, {
-								Name:  rootCAPathEnvVar,
+								Name:  envRootCAPath,
 								Value: tFoo,
 							}, {
-								Name: certificateEnvVar,
+								Name: envCertificate,
 								ValueFrom: &corev1.EnvVarSource{
 									SecretKeyRef: tFooRef,
 								},
 							}, {
-								Name:  certificatePathEnvVar,
+								Name:  envCertificatePath,
 								Value: tFoo,
 							}, {
-								Name: privateKeyEnvVar,
+								Name: envPrivateKey,
 								ValueFrom: &corev1.EnvVarSource{
 									SecretKeyRef: tFooRef,
 								},
 							}, {
-								Name:  privateKeyPathEnvVar,
+								Name:  envPrivateKeyPath,
 								Value: tFoo,
 							},
 						},

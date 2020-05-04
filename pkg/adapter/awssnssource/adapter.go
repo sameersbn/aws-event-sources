@@ -60,10 +60,12 @@ type adapter struct {
 	awsRegion string
 }
 
+// NewEnvConfig returns an accessor for the source's adapter envConfig.
 func NewEnvConfig() pkgadapter.EnvConfigAccessor {
 	return &envConfig{}
 }
 
+// NewAdapter returns a constructor for the source's adapter.
 func NewAdapter(ctx context.Context, envAcc pkgadapter.EnvConfigAccessor,
 	ceClient cloudevents.Client) pkgadapter.Adapter {
 
@@ -118,14 +120,14 @@ func (a *adapter) attempSubscription(period time.Duration) error {
 	}
 
 	sink := os.Getenv("K_SINK")
-	sinkUrl, err := url.Parse(sink)
+	sinkURL, err := url.Parse(sink)
 	if err != nil {
 		return err
 	}
 
 	_, err = a.snsClient.Subscribe(&sns.SubscribeInput{
 		Endpoint: &sink,
-		Protocol: &sinkUrl.Scheme,
+		Protocol: &sinkURL.Scheme,
 		TopicArn: topic.TopicArn,
 	})
 	if err != nil {

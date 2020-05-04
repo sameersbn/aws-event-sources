@@ -54,10 +54,12 @@ type adapter struct {
 	awsRegion string
 }
 
+// NewEnvConfig returns an accessor for the source's adapter envConfig.
 func NewEnvConfig() pkgadapter.EnvConfigAccessor {
 	return &envConfig{}
 }
 
+// NewAdapter returns a constructor for the source's adapter.
 func NewAdapter(ctx context.Context, envAcc pkgadapter.EnvConfigAccessor,
 	ceClient cloudevents.Client) pkgadapter.Adapter {
 

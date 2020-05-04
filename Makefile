@@ -23,7 +23,12 @@ coverage: ## Generate code coverage
 	$(GOTOOL) cover -html=c.out -o $(OUTPUT_DIR)$(PACKAGE)-coverage.html
 
 lint:
-	$(GOLINT) -set_exit_status $(GOPKGS)
+# Implementing methods from the AWS SDK containing "Url" in their name causes lint warnings.
+	@{ \
+		results=$$($(GOLINT) -min_confidence=0.5 $(GOPKGS) 2>&1); \
+		filtered=$$(echo "$$results" | grep -v 'method GetQueueUrl'); \
+		echo $$filtered; \
+	}; [ -z "$$filtered" ]
 
 vet:
 	$(GO) vet $(GOPKGS)
