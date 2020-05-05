@@ -49,7 +49,7 @@ jobs:
           name: Installing golangci-lint
           command:  go get github.com/golangci/golangci-lint/cmd/golangci-lint@v1.26.0
           environment:
-            GO111MODULE=on
+            GO111MODULE: on
       - run:
           name: Run lint
           command: make lint
